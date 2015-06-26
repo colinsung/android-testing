@@ -22,6 +22,23 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    if(System.getenv("ANDROID_KEYSTORE") != null) {
+        signingConfigs {
+            release {
+                storeFile file(System.getenv("ANDROID_KEYSTORE"))
+                storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("ANDROID_KEY_ALIAS")
+                keyPassword System.getenv("ANDROID_KEY_PASSWORD")
+            }
+        }
+
+	buildTypes {
+            release {
+                signingConfig signingConfigs.release
+	    }
+        }
+    }
     packagingOptions {
         exclude 'LICENSE.txt'
     }
